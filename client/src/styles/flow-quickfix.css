@@ -1,0 +1,51 @@
+/* Quick-fix flows (Subject Swap, Headline Switch, Size Adapt): next-step cards, selectable thumbnails,
+   one generation-error block. Imported by the editors that use them. */
+
+/* Generation error: same message + Try again everywhere */
+.fx-generr { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin: 0; }
+.fx-generr__text { margin: 0; color: #C62828; font: 400 14px/20px var(--font-body, inherit); }
+
+/* Next-step cards under Download */
+.nextsteps { display: flex; flex-direction: column; gap: 20px; width: 100%; margin-top: 8px; }
+.nextcard { display: flex; align-items: flex-start; gap: 40px; width: 100%; padding: 16px 20px; background: #fff; border: 1px solid #C7CBDA; border-radius: 8px; }
+.nextcard--tight { padding-left: 10px; padding-right: 10px; }
+.nextcard__main { flex: 1 1 0; min-width: 0; display: flex; gap: 20px; align-items: flex-start; }
+.nextcard__main > img { flex: none; width: 39px; height: 39px; }
+.nextcard__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.nextcard__text { margin: 0; font: 400 16px/24px var(--font-body, inherit); color: #000; }
+.nextcard__error { margin: 0; font: 400 14px/20px var(--font-body, inherit); color: #C62828; }
+.nextcard__link { flex: none; width: 150px; display: flex; align-items: center; justify-content: space-between; padding: 9px 15px; border: 0; border-radius: 8px; background: #EEE; color: #000; font: 400 14px/normal var(--font-body, inherit); cursor: pointer; transition: background-color .2s ease; }
+.nextcard__link:hover:not(:disabled), .nextcard__link:focus-visible { background: #E2E4EA; }
+.nextcard__link:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.nextcard__link:disabled { opacity: .55; cursor: not-allowed; }
+.nextcard__link img { width: 24px; height: 24px; }
+@media (max-width: 1100px) { .nextcard { gap: 16px; } }
+@media (max-width: 640px) { .nextcard { flex-direction: column; } .nextcard__link { width: 100%; } }
+
+/* Size Adapt last screen: thumbnails sit straight in the dashed box (no padding, border or rounded corners) */
+.sa-tiles--bare { padding: 0; }
+.sa-tiles--bare .sa-tile { padding: 0; border: 0; border-radius: 0; background: none; }
+.sa-tiles--bare .sa-tile:hover { box-shadow: none; }
+.sa-tiles--bare .sa-tile__img { border-radius: 0; }
+
+/* Pick one thumbnail: selected badge = blue circle with a white tick */
+.sa-tile__pick { position: absolute; top: 10px; right: 10px; z-index: 2; width: 26px; height: 26px; padding: 0; border-radius: 50%; border: 1.5px solid #fff; background: rgba(10,14,23,.3); color: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color .15s ease, border-color .15s ease; }
+.sa-tile__pick svg { width: 14px; height: 14px; opacity: 0; transition: opacity .15s ease; }
+.sa-tile__pick:hover { background: rgba(10,14,23,.5); }
+.sa-tile__pick:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.sa-tile__pick[aria-pressed="true"] { background: var(--blue); border-color: #fff; color: #fff; }
+.sa-tile__pick[aria-pressed="true"] svg { opacity: 1; }
+.sa-tile.is-picked .sa-tile__img { box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--blue); }
+
+/* "Choose size" panel */
+.fx-sizepane { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+.fx-sizepane .sa-note { margin: 0; }
+
+.sa-tile__state .fx-generr { align-items: center; text-align: center; }
+.sa-tiles--bare { padding: 24px; border: 2px dashed #C7CBDA; border-radius: 8px; background: #fff; }
+.sa-tiles--bare .sa-tile__img { min-height: 220px; }
+.sa-group .sa-picker, .sa-group > * { min-width: 0; }
+
+.sa-tile__state .fx-generr { align-items: center; text-align: center; }
+.sa-tiles--bare { padding: 24px; border: 2px dashed #C7CBDA; border-radius: 8px; background: #fff; }
+.sa-tiles--bare .sa-tile__img { min-height: 220px; }

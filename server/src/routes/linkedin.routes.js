@@ -1,0 +1,17 @@
+import { Router } from 'express';
+import { requireAuth, requirePermission } from '../middleware/auth.js';
+import { getConnectUrl, callback, status, disconnect } from '../controllers/linkedin.controller.js';
+
+const router = Router();
+
+// Public: this is hit directly by LinkedIn's browser redirect, not our SPA,
+// so it can't carry our normal Authorization header - see the controller's
+// top comment for how the user is identified via the signed `state` param.
+router.get('/callback', callback);
+
+router.use(requireAuth);
+router.get('/connect-url', requirePermission('manageBrand'), getConnectUrl);
+router.get('/status', status);
+router.post('/disconnect', requirePermission('manageBrand'), disconnect);
+
+export default router;

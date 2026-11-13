@@ -1,0 +1,76 @@
+/* ---------------------------------------------------------------------------
+   Side-panel ("rail") layout for every flow - Automatr prototype 4.
+   Dotted stage on the left (the picture / the live frame / the results), settings panel on the right with the
+   animated panel graphic under the main button, and on the last screens a bottom panel with the options.
+   Base rules (.rail, .rail__stage, .rail__panel, .frame ...) live in new-creative-flow.css; this file adds
+   what the other flows need. Imported by components/flow/Rail.jsx.
+--------------------------------------------------------------------------- */
+
+/* decorative graphic under the main button in the side panel (plays once when it scrolls into view) */
+.panel-art { position: relative; flex: none; width: 100%; aspect-ratio: 511 / 207; height: auto; margin-top: -8px; border-radius: 8px; overflow: hidden; pointer-events: none; background: #fff; }
+.panel-art--lottie svg { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.rail__panel > .panel-art { margin-top: 0; }
+
+/* ---- the picture on the stage: no box around it, it sits on the dots ---- */
+.rail__stage.is-dragover { background-color: #EEF3FF; outline: 2px dashed var(--blue); outline-offset: -10px; }
+.rail__stage .sa-preview { position: absolute; inset: var(--stage-pad); width: auto; height: auto; min-height: 0; max-height: none; margin: 0; display: flex; align-items: center; justify-content: center; background: none; border-radius: 0; overflow: visible; }
+.rail__stage .sa-preview--empty { min-height: 0; background: none; }
+.rail__stage .sa-preview img { position: static; display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; background: #fff; box-shadow: 0 10px 40px rgba(16, 24, 40, .18); transition: width .25s ease, height .25s ease; }
+.rail__stage .sa-preview .sa-preview__action { right: 20px; top: 20px; bottom: auto; left: auto; }
+.rail__stage .sa-preview__busy { border-radius: 0; }
+.rail__stage .sa-preview .sa-preview__busy { inset: 0; }
+
+/* screens with outlined elements (Subject Swap, Headline Switch, Creative Edit): the picture sets the size of the layer that carries the boxes */
+.rail__stage .fx-stage { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: auto; border-radius: 4px; background: #fff; box-shadow: 0 10px 40px rgba(16, 24, 40, .18); }
+.rail__stage .fx-stage__img { width: auto; height: auto; max-height: none; max-width: calc(70vw - 2 * var(--stage-pad)); }
+@supports (width: 1cqw) { .rail__stage .fx-stage__img { max-width: calc(100cqw - 2 * var(--stage-pad)); max-height: calc(100cqh - 2 * var(--stage-pad)); } }
+.rail__stage .fx-stage .sa-preview__action { z-index: 4; }
+.rail__stage .fx-tip { top: auto; bottom: 14px; }
+.rail__stage-count { position: absolute; left: 20px; bottom: 16px; z-index: 3; margin: 0; padding: 6px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 13px; line-height: 18px; color: #475467; box-shadow: 0 2px 8px rgba(16, 24, 40, .08); }
+
+/* ---- the results on the stage ---- */
+.rail__stage--scroll { overflow: auto; display: flex; }
+.rail__stage-inner { margin: auto; width: 100%; max-width: 900px; padding: var(--stage-pad); }
+.rail__stage .sa-tiles { padding: 0; border: 0; background: none; border-radius: 0; }
+@media (max-width: 1100px) { .rail__stage--scroll { flex: none; min-height: 0; overflow: visible; container-type: normal; --stage-pad: 20px; } }
+
+/* ---- one corner radius for every uploaded or generated image, in every flow: 4px ---- */
+.sa-tile__img, .sa-tile__img > img, .sa-tiles--bare .sa-tile__img, .option__frame, .rail__stage .sa-preview img, .rail__stage .fx-stage, .fx-stage__img, .fx-refbox { border-radius: 4px; }
+
+/* ---- bottom panel (every last screen) ---- */
+.rail--bottom { flex-direction: column; }
+.rail__bottom { flex: none; max-height: 48vh; overflow-y: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); justify-content: space-between; gap: 24px 40px; align-items: center; padding: 20px 32px 24px; background: #fff; border-top: 1px solid var(--line); font-size: 14px; line-height: 20px; }
+.rail__bottom-text { position: relative; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.rail__bottom-text p { margin: 0; }
+.rail__bottom-text .sa-btn--outline { width: auto; align-self: flex-start; }
+.rail__bottom-text .sa-btn--lg { margin-top: 12px; }
+.rail__bottom-actions { display: flex; flex-direction: column; gap: 16px; align-items: stretch; width: 100%; max-width: 520px; justify-self: end; }
+.rail__bottom-actions .nextsteps { max-width: 520px; margin-top: 0; }
+.rail__bottom-actions:empty { display: none; }
+.rail__bottom-error { margin: 0; color: #C62828; font: 400 14px/20px var(--font-body); }
+@media (max-width: 900px) { .rail__bottom { grid-template-columns: 1fr; max-height: none; } .rail__bottom-actions { justify-self: stretch; } }
+
+/* next-step buttons (Convert now / Adapt now): same swipe-to-blue hover as the other buttons */
+.nextcard__link { position: relative; isolation: isolate; overflow: hidden; transition: color .35s ease; }
+.nextcard__link > * { position: relative; z-index: 1; }
+.nextcard__link img { transition: filter .35s ease; }
+.nextcard__link::before { content: ""; position: absolute; inset: 0; z-index: 0; background: var(--blue); transform: scaleX(0); transform-origin: left center; transition: transform .4s cubic-bezier(.65, 0, .35, 1); }
+.nextcard__link:hover:not(:disabled), .nextcard__link:focus-visible:not(:disabled) { background: #EEE; color: #fff; }
+.nextcard__link:hover:not(:disabled)::before, .nextcard__link:focus-visible:not(:disabled)::before { transform: scaleX(1); }
+.nextcard__link:hover:not(:disabled) img, .nextcard__link:focus-visible:not(:disabled) img { filter: brightness(0) invert(1); }
+@media (prefers-reduced-motion: reduce) { .nextcard__link, .nextcard__link img, .nextcard__link::before { transition-duration: .01ms; } }
+
+/* ---- last screens (every flow): the result centred in its own proportions, Preview / Download on the image ---- */
+.page-result .rail__stage .sa-tiles--single .sa-tile__img, .page-result .rail__stage .sa-tiles--single .sa-tile__img.fx-skel { height: auto; min-height: 0; aspect-ratio: var(--ar, .8); width: min(100%, calc((100cqh - 2 * var(--stage-pad)) * var(--ar, .8))); margin: 0 auto; background: none; }
+.page-result .rail__stage .sa-tiles--single .sa-tile__img > img { width: 100%; height: 100%; max-height: none; object-fit: cover; }
+.page-result .sa-tiles--single .sa-tile__img.is-bloom { background: #E9EBF0; }
+.page-result .sa-tiles--single .sa-tile { padding: 0; border: 0; border-radius: 0; background: none; }
+.page-result .sa-tiles--single .sa-tile:hover { box-shadow: none; }
+.page-result .sa-tiles--single .sa-tile__actions { left: 20px; right: 20px; bottom: 20px; }
+.page-result .sa-tiles--single { display: block; }
+
+/* the post copy field on the last screens: capped height, with a very subtle scrollbar when the text is longer */
+.page-result .postcopy { max-height: 112px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: rgba(16, 24, 40, .18) transparent; }
+.page-result .postcopy::-webkit-scrollbar { width: 6px; }
+.page-result .postcopy::-webkit-scrollbar-track { background: transparent; }
+.page-result .postcopy::-webkit-scrollbar-thumb { background: rgba(16, 24, 40, .16); border-radius: 3px; }
