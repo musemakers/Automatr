@@ -2,12 +2,11 @@
 set -euo pipefail
 APP_DIR=/var/www/automatr
 APP_USER=ubuntu
-ENV_SRC=/etc/automatr/server.env
 cd "$APP_DIR"
 
-# 1. Server env lives on the instance (not in git) - copy it in on every deploy
-[ -s "$ENV_SRC" ] || { echo "ERROR: $ENV_SRC missing or empty"; exit 1; }
-install -m 600 -o $APP_USER -g $APP_USER "$ENV_SRC" server/.env
+# 1. Env lives in the app folder (gitignored, survives deploys) - just make sure it's there
+[ -s server/.env ] || { echo "ERROR: $APP_DIR/server/.env missing - create it on the server first"; exit 1; }
+chmod 600 server/.env
 
 # 2. Client must call the API same-origin (/api)
 rm -f client/.env client/.env.local client/.env.production
