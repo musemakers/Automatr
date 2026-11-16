@@ -1,8 +1,0 @@
-/* Subject Swap / Headline Switch in the rail layout (prototype 4) */
-.rail__stage-count { max-width: calc(100% - 40px); }
-.rail__panel .fx-list, .rail__panel .fx-listwrap { width: 100%; }
-.rail__panel .sa-btn--outline { align-self: stretch; }
-.rail__bottom-text .fx-list { gap: 6px; }
-.rail__bottom-text .fx-recap { padding: 6px 12px; font-size: 13px; line-height: 18px; }
-.rail__bottom-text .fx-generr { margin: 0; }
-.page-result .sa-tile__img.fx-skel { background: #E9EBF0; animation: none; }
